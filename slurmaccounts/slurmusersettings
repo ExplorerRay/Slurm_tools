@@ -338,10 +338,10 @@ BEGIN {
 	#
 	# Read the account settings configuration file: user_settings_conf
 	#
-	FS=":"	# Set the Field Separator
+	FS="!"	# Set the Field Separator
 
-	# Syntax of this file is 3, 4 or 5 items separated by ":"
-	# [DEFAULT|NEWUSER|UNIX_group|username]:[Type]:value[:partition[:cluster]]
+	# Syntax of this file is 3, 4 or 5 items separated by "!"
+	# [DEFAULT|NEWUSER|UNIX_group|username]![Type]!value[!partition[!cluster]]
 	# Type may be: fairshare, GrpTRES, GrpTRESRunMins, etc.
 	# The partition and cluster fields (4,5) are optional, defaults are chosen if omitted.
 
@@ -390,6 +390,7 @@ BEGIN {
 		}
 	}
 	close (user_settings_conf)
+	FS=":"	# Set the Field Separator back to the default
 	if (debug > 0) print "### End of BEGIN section"
 }
 

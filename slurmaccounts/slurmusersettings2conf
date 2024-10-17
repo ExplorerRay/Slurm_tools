@@ -5,7 +5,7 @@
 # Homepage: https://github.com/OleHolmNielsen/Slurm_tools/
 
 # Syntax of the user_settings.conf config file is:
-# [DEFAULT|UNIX_group|username]:[Type]:value
+# [DEFAULT|UNIX_group|username]![Type]!value
 # Type may be: fairshare, GrpTRES, GrpTRESRunMins etc.
 
 # Run commands remotely if your Slurm host does not have gawk version 4:
@@ -55,7 +55,7 @@ BEGIN {
 	# Print a header
 	print "###"
 	print "### Syntax of the user_settings.conf config file is:"
-	print "### [DEFAULT|UNIX_group|username]:[Type]:value"
+	print "### [DEFAULT|UNIX_group|username]![Type]!value"
 	print "### Type: " string
 	print "###"
 
@@ -94,7 +94,7 @@ BEGIN {
 		{
 			# Count the setting values
 			v = setting[u][sf]
-			if (debug > 0) printf("%s:%s:%s\n", u, sf, v)
+			if (debug > 0) printf("%s!%s!%s\n", u, sf, v)
 			# Accumulate account settings
 			counts[a][sf][v]++
 			value[a][sf][v] = v
@@ -126,9 +126,9 @@ BEGIN {
 			}
 		}
 		if (globaldefaultvalue[sf] != "")
-			printf("%s:%s:%s\n", "DEFAULT", sf, globaldefaultvalue[sf])
+			printf("%s!%s!%s\n", "DEFAULT", sf, globaldefaultvalue[sf])
 		else
-			printf("### Empty default value: %s:%s:%s\n", "DEFAULT", sf, globaldefaultvalue[sf])
+			printf("### Empty default value: %s!%s!%s\n", "DEFAULT", sf, globaldefaultvalue[sf])
 	}
 	print "###"
 	print "### The account default values of settings"
@@ -156,9 +156,9 @@ BEGIN {
 			}
 			# Print the value if it differs from the global default
 			if (defaultvalue[a][sf] != globaldefaultvalue[sf])
-				printf("%s:%s:%s\n", a, sf, defaultvalue[a][sf])
+				printf("%s!%s!%s\n", a, sf, defaultvalue[a][sf])
 			else if (debug > 0)
-				printf("%s:%s:%s equals global default value %s\n",
+				printf("%s!%s!%s equals global default value %s\n",
 					a, sf, defaultvalue[a][sf], globaldefaultvalue[sf])
 		}
 	}
@@ -172,7 +172,7 @@ BEGIN {
 			sf = slurm_factors[j]
 			# Print the value only if it differs from the account default
 			if (setting[u][sf] != "" && setting[u][sf] != defaultvalue[a][sf])
-				printf("%s:%s:%s\n", u, sf, setting[u][sf])
+				printf("%s!%s!%s\n", u, sf, setting[u][sf])
 		}
 	}
 }'

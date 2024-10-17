@@ -172,15 +172,15 @@ The file ```/etc/slurm/user_settings.conf``` defines users' Slurm factors includ
 fairshare GrpTRES GrpTRESMins MaxTRES MaxTRESPerNode MaxTRESMins GrpTRESRunMins QOS DefaultQOS GrpJobsAccrue MaxJobsAccrue
 ```
 
-The syntax of this file is 3, 4 or 5 items separated by ":"
+The syntax of this file is 3, 4 or 5 items separated by "!"
 
 ```
-[DEFAULT|NEWUSER|UNIX_group|username]:[Type]:value[:partition[:cluster]]
+[DEFAULT|NEWUSER|UNIX_group|username]![Type]!value[!partition[!cluster]]
 Type may be: fairshare, GrpTRES, GrpTRESRunMins, etc.
 The partition and cluster fields (4,5) are optional, and defaults are chosen if the fields are omitted.
 ```
 
-Restriction: The ``value`` field **must not** contain a ``:`` character, for example when specifying a Time parameter.
+Restriction: The ``value`` field which contains a ``:`` character need to write without abbreviation, for example when specifying a Time parameter like setting MaxWall to 30 mins, should be "00:30:00" instead of only "30".
 
 The example file in this directory should be edited and copied to ```/etc/slurm/user_settings.conf```.
 
@@ -188,36 +188,36 @@ Examples:
 
 ```
 # The default fairshare, QOS and limits
-DEFAULT:fairshare:1
-DEFAULT:GrpTRES:cpu=1200,gres/gpu=20
-DEFAULT:GrpTRESRunMins:cpu=3000000
-DEFAULT:QOS:normal
-DEFAULT:MaxJobs:500
-DEFAULT:MaxSubmitJobs:5000
-DEFAULT:MaxJobsAccrue:50
+DEFAULT!fairshare!1
+DEFAULT!GrpTRES!cpu=1200,gres/gpu=20
+DEFAULT!GrpTRESRunMins!cpu=3000000
+DEFAULT!QOS!normal
+DEFAULT!MaxJobs!500
+DEFAULT!MaxSubmitJobs!5000
+DEFAULT!MaxJobsAccrue!50
 
 # The NEWUSER fairshare, QOS and limits
-NEWUSER:fairshare:0
-NEWUSER:GrpTRES:cpu=100
-NEWUSER:GrpTRESRunMins:cpu=400000
-NEWUSER:QOS:normal
-NEWUSER:MaxJobs:50
-NEWUSER:MaxSubmitJobs:50
-NEWUSER:MaxJobsAccrue:10
+NEWUSER!fairshare!0
+NEWUSER!GrpTRES!cpu=100
+NEWUSER!GrpTRESRunMins!cpu=400000
+NEWUSER!QOS!normal
+NEWUSER!MaxJobs!50
+NEWUSER!MaxSubmitJobs!50
+NEWUSER!MaxJobsAccrue!10
 # Configure "username" so that NEWUSER settings will be ignored
-# NEWUSER:username:ignore
+# NEWUSER!username!ignore
 # Configure NEWUSER "username" so we do not create this Slurm user
-# NEWUSER:username:dontcreate
+# NEWUSER!username!dontcreate
 
 # UNIX group defaults
-camdfac:fairshare:5
-camdvip:fairshare:3
-camdstud:fairshare:2
+camdfac!fairshare!5
+camdvip!fairshare!3
+camdstud!fairshare!2
 
 # User values that differ from the defaults
-user01:fairshare:10
-user02:fairshare:1
-user03:QOS:normal,high
+user01!fairshare!10
+user02!fairshare!1
+user03!QOS!normal,high
 ```
 
 slurmusersettings2conf tool
